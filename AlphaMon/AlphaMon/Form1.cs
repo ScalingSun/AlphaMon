@@ -15,7 +15,6 @@ namespace AlphaMon
         public Form1()
         {
             InitializeComponent();
-            DB conn = new DB();
         }
     }
 }
