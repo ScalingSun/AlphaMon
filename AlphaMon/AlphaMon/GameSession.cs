@@ -8,5 +8,6 @@ namespace AlphaMon
 {
     class GameSession
     {
+        UsedAlphaMon alphamon1 = new UsedAlphaMon();
     }
 }

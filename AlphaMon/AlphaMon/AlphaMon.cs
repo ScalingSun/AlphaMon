@@ -8,5 +8,7 @@ namespace AlphaMon
 {
     class AlphaMon
     {
+        List<Move> moves = new List<Move>();
+        Types type = new Types();
     }
 }

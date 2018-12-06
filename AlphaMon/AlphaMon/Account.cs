@@ -8,5 +8,6 @@ namespace AlphaMon
 {
     class Account
     {
+        GameRecord record = new GameRecord();
     }
 }

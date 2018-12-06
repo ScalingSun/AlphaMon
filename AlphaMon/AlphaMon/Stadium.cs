@@ -8,5 +8,8 @@ namespace AlphaMon
 {
     class Stadium
     {
+        Player player1 = new Player();
+        Player player2 = new Player();
+        GameSession Session = new GameSession();
     }
 }

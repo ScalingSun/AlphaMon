@@ -57,7 +57,7 @@
     </Compile>
     <Compile Include="GameRecord.cs" />
     <Compile Include="GameSession.cs" />
-    <Compile Include="Moves.cs" />
+    <Compile Include="Move.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
