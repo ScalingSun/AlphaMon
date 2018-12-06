@@ -20,7 +20,7 @@ namespace AlphaMon
         private void btnRegister_Click(object sender, EventArgs e)
         {
             frmRegister registerForm = new frmRegister();
-            frmRegister.Show();
+            registerForm.Show();
             this.Hide();
         }
 
