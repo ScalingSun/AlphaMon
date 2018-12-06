@@ -11,6 +11,7 @@ namespace AlphaMon
     class DB
     {
         private SqlConnection conn;
+
         public DB()
         {
             try
@@ -48,6 +49,33 @@ namespace AlphaMon
             {
                 Console.WriteLine(e.Message);
                 return false;
+            }
+        }
+
+        public Account LoginFunction(string UserName, string Password)
+        {
+            DB login = new DB();
+            using (SqlCommand LOGIN = new SqlCommand("SELECT * FROM Account WHERE @UserName = UserName AND @Password = Password", conn))
+            {
+                conn.Open();
+                LOGIN.Parameters.Add(new SqlParameter("UserName", UserName));
+                LOGIN.Parameters.Add(new SqlParameter("Password", Password));
+                SqlDataReader reader = LOGIN.ExecuteReader();
+
+                if (!reader.HasRows)
+                {
+                    return null;
+                }
+                List<Account> UserData = new List<Account>();
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(0);
+                    string username = reader.GetString(1);
+                    string password = reader.GetString(2);
+
+                    return new Account(id, username, password);
+                }
+                return null;
             }
         }
     }

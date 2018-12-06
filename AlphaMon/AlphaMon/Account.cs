@@ -9,5 +9,9 @@ namespace AlphaMon
     class Account
     {
         GameRecord record = new GameRecord();
+        public Account(int ID, string Username, string Password)
+        {
+
+        }
     }
 }
