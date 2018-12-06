@@ -19,10 +19,9 @@ namespace AlphaMon
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
-
+            frmRegister registerForm = new frmRegister();
+            frmRegister.Show();
             this.Hide();
-            /*AanvraagAppLogin frm = new AanvraagAppLogin();
-            frm.ShowDialog();*/
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
