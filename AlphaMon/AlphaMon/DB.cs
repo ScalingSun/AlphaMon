@@ -10,6 +10,8 @@ namespace AlphaMon
 {
     class DB
     {
+        private SqlConnection conn;
+        
         public DB()
         {
             try
@@ -19,15 +21,40 @@ namespace AlphaMon
                 cb.UserID = "alphamon";
                 cb.Password = "Konijnenvanger648";
                 cb.InitialCatalog = "Alphamon ";
-
-                using (var connection = new SqlConnection(cb.ConnectionString))
-                {
-                    connection.Open();
-                }
+                SqlConnection con = new SqlConnection(cb.ConnectionString);
+                this.conn = con;
             }
             catch (SqlException e)
             {
                 Console.WriteLine(e.ToString());
+            }
+        }
+
+
+        public Account LoginFunction(string UserName, string Password)
+        {
+            DB login = new DB();
+            using (SqlCommand LOGIN = new SqlCommand("SELECT * FROM Account WHERE @UserName = UserName AND @Password = Password", conn))
+            {
+                conn.Open();
+                LOGIN.Parameters.Add(new SqlParameter("UserName", UserName));
+                LOGIN.Parameters.Add(new SqlParameter("Password", Password));
+                SqlDataReader reader = LOGIN.ExecuteReader();
+
+                if (!reader.HasRows)
+                {
+                    return null;
+                }
+                List<Account> UserData = new List<Account>();
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(0);
+                    string username = reader.GetString(1);
+                    string password = reader.GetString(2);
+
+                    return new Account(id, username, password);
+                }
+                return null;
             }
         }
     }

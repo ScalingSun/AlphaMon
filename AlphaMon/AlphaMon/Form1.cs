@@ -15,7 +15,33 @@ namespace AlphaMon
         public Form1()
         {
             InitializeComponent();
-            DB conn = new DB();
+        }
+
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+
+            this.Hide();
+            /*AanvraagAppLogin frm = new AanvraagAppLogin();
+            frm.ShowDialog();*/
+        }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            string Username = txbUsername.Text;
+            string Password = txbPassword.Text;
+            DB login = new DB();
+            Account Userdata = login.LoginFunction(Username, Password);
+            if (Userdata != null)
+            {
+                MessageBox.Show("banana");
+                /*this.Hide();
+                ProfileForm frm = new ProfileForm(Userdata);
+                frm.Show();*/
+            }
+            else
+            {
+                MessageBox.Show("Foutieve login!");
+            }
         }
     }
 }

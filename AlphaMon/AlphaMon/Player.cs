@@ -8,8 +8,15 @@ namespace AlphaMon
 {
     class Player
     {
-        Account account = new Account();
-        AlphaMon Alphamon = new AlphaMon();
+        int userID = 0;
+        string Username = "something";
+        string UserPassword = "SomethingElse";
+        public Player()
+        {
+            Account account = new Account(userID, Username, UserPassword);
+            AlphaMon Alphamon = new AlphaMon();
+        }
+
 
     }
 }
