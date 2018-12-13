@@ -6,15 +6,18 @@ using System.Threading.Tasks;
 
 namespace AlphaMon
 {
-    class Player
+    public class Player
     {
         int userID = 0;
         string Username = "something";
         string UserPassword = "SomethingElse";
+        int elo = 50;
+        int wins = 0;
+        int losses = 0;
         public Player()
         {
-            Account account = new Account(userID, Username, UserPassword);
-            AlphaMon Alphamon = new AlphaMon();
+            Account account = new Account(userID, Username, UserPassword,elo,wins,losses);
+            //AlphaMon Alphamon = new AlphaMon();
         }
 
 

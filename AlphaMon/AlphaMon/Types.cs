@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AlphaMon
 {
-    class Types
+    public class Types
     {
     }
 }

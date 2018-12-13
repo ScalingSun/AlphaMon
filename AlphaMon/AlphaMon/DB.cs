@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace AlphaMon
 {
-    class DB
+    public class DB
     {
-        private SqlConnection conn;
+        private string connection;
 
         public DB()
         {
@@ -21,9 +21,8 @@ namespace AlphaMon
                 cb.UserID = "alphamon";
                 cb.Password = "Konijnenvanger648";
                 cb.InitialCatalog = "Alphamon";
-                SqlConnection con = new SqlConnection(cb.ConnectionString);
-                this.conn = con;
-                
+                this.connection = cb.ConnectionString;
+
             }
             catch (SqlException e)
             {
@@ -33,49 +32,123 @@ namespace AlphaMon
 
         public bool RegisterQuery(string Username, string Password)
         {
-            try
+            using (SqlConnection conn = new SqlConnection(connection))
             {
-                using (SqlCommand REGISTER = new SqlCommand("INSERT INTO Account (Username, Password, ELO, Wins, Losses) VALUES (@Username, @Password, 50, 0, 0)", conn))
+                try
                 {
-                    conn.Open();
-                    REGISTER.Parameters.AddWithValue("@Username", Username);
-                    REGISTER.Parameters.AddWithValue("@Password", Password);
-                    REGISTER.ExecuteNonQuery();
-                }
+                    using (SqlCommand REGISTER = new SqlCommand("INSERT INTO Account (Username, Password, ELO, Wins, Losses) VALUES (@Username, @Password, 50, 0, 0)", conn))
+                    {
+                        conn.Open();
+                        REGISTER.Parameters.Add(new SqlParameter("@Username", Username));
+                        REGISTER.Parameters.Add(new SqlParameter("@Password", Password));
+                        REGISTER.ExecuteNonQuery();
+                    }
 
-                return true;
-            }
-            catch(SqlException e)
-            {
-                Console.WriteLine(e.Message);
-                return false;
+                    return true;
+                }
+                catch (SqlException e)
+                {
+                    Console.WriteLine(e.Message);
+                    return false;
+                }
             }
         }
 
         public Account LoginFunction(string UserName, string Password)
         {
-            DB login = new DB();
-            using (SqlCommand LOGIN = new SqlCommand("SELECT * FROM Account WHERE @UserName = UserName AND @Password = Password", conn))
+            using (SqlConnection conn = new SqlConnection(connection))
             {
-                conn.Open();
-                LOGIN.Parameters.Add(new SqlParameter("UserName", UserName));
-                LOGIN.Parameters.Add(new SqlParameter("Password", Password));
-                SqlDataReader reader = LOGIN.ExecuteReader();
-
-                if (!reader.HasRows)
+                DB login = new DB();
+                using (SqlCommand LOGIN = new SqlCommand("SELECT * FROM Account WHERE @UserName = UserName AND @Password = Password", conn))
                 {
+                    conn.Open();
+                    LOGIN.Parameters.Add(new SqlParameter("UserName", UserName));
+                    LOGIN.Parameters.Add(new SqlParameter("Password", Password));
+                    SqlDataReader reader = LOGIN.ExecuteReader();
+
+                    if (!reader.HasRows)
+                    {
+                        return null;
+                    }
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(0);
+                        string username = reader.GetString(1);
+                        string password = reader.GetString(2);
+                        int elo = reader.GetInt32(3);
+                        int wins = reader.GetInt32(4);
+                        int losses = reader.GetInt32(5);
+
+                        return new Account(id, username, password, elo, wins, losses);
+                    }
                     return null;
                 }
-                List<Account> UserData = new List<Account>();
-                while (reader.Read())
+            }
+        }
+        public AlphaMon GetAlphamon(int someID)
+        {
+            using (SqlConnection conn = new SqlConnection(connection))
+            {
+                DB AlphaMon = new DB();
+                using (SqlCommand ALPHAMON = new SqlCommand("SELECT * FROM Alphamon WHERE @SomeID = ID", conn))
                 {
-                    int id = reader.GetInt32(0);
-                    string username = reader.GetString(1);
-                    string password = reader.GetString(2);
+                    conn.Open();
+                    ALPHAMON.Parameters.Add(new SqlParameter("SomeID", someID));
+                    SqlDataReader reader = ALPHAMON.ExecuteReader();
 
-                    return new Account(id, username, password);
+                    if (!reader.HasRows)
+                    {
+                        return null;
+                    }
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(0);
+                        string name = reader.GetString(1);
+                        int type = reader.GetInt32(2);
+                        int SpDefense = reader.GetInt32(3);
+                        int SpAttack = reader.GetInt32(4);
+                        int Attack = reader.GetInt32(5);
+                        int Defense = reader.GetInt32(6);
+                        int Speed = reader.GetInt32(7);
+                        int HP = reader.GetInt32(8);
+                        return new AlphaMon(id, name, type, SpDefense, SpAttack, Attack, Defense, Speed, HP);
+                    }
+                    conn.Close();
+                    return null;
                 }
-                return null;
+            }
+        }
+        public List <Move> GetMoves(int AlphamonID)
+        {
+            using (SqlConnection conn = new SqlConnection(connection))
+            {
+                DB AlphaMon = new DB();
+                using (SqlCommand ALPHAMON = new SqlCommand("SELECT * FROM Moves INNER JOIN AlphamonMoves ON Moves.ID = AlphamonMoves.MovesID WHERE MonsterID = @AlphamonID", conn))
+                {
+                    conn.Open();
+                    ALPHAMON.Parameters.Add(new SqlParameter("AlphamonID", AlphamonID));
+                    SqlDataReader reader = ALPHAMON.ExecuteReader();
+
+                    if (!reader.HasRows)
+                    {
+                        return null;
+                    }
+                    List<Move> Returnlist = new List<Move>();
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(0);
+                        string name = reader.GetString(1);
+                        int power = reader.GetInt32(2);
+                        int type = reader.GetInt32(3);
+                        string description = reader.GetString(4);
+                        int statusChance = reader.GetInt32(5);
+                        int Status = reader.GetInt32(6);
+                        Returnlist.Add(new Move(id, name, power, type, description, statusChance, Status));
+                        
+                    }
+                    conn.Close();
+                    return Returnlist;
+                }
             }
         }
     }

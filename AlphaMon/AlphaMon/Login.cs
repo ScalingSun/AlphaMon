@@ -10,18 +10,27 @@ using System.Windows.Forms;
 
 namespace AlphaMon
 {
-    public partial class Form1 : Form
+    public partial class Login : Form
     {
-        public Form1()
+        public event EventHandler<Account> test;
+        public Login()
         {
             InitializeComponent();
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            frmRegister registerForm = new frmRegister();
-            registerForm.Show();
-            this.Hide();
+            string Username = txbUsername.Text;
+            string Password = txbPassword.Text;
+            DB register = new DB();
+            bool IsRegistered = register.RegisterQuery(Username, Password);
+            if (IsRegistered) {
+                MessageBox.Show("je bent succesvol geregistreerd!");
+            }
+            else
+            {
+                MessageBox.Show("Registreren gefaald!");
+            }
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -32,10 +41,8 @@ namespace AlphaMon
             Account Userdata = login.LoginFunction(Username, Password);
             if (Userdata != null)
             {
-                MessageBox.Show("banana");
-                /*this.Hide();
-                ProfileForm frm = new ProfileForm(Userdata);
-                frm.Show();*/
+                test.Invoke(this, Userdata);
+                this.Dispose();
             }
             else
             {

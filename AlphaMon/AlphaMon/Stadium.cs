@@ -6,10 +6,39 @@ using System.Threading.Tasks;
 
 namespace AlphaMon
 {
-    class Stadium
+    public class Stadium
     {
-        Player player1 = new Player();
-        Player player2 = new Player();
-        GameSession Session = new GameSession();
+        public Player player1 = new Player();
+        public Player player2 = new Player();
+        public GameSession Session = new GameSession();
+        public DB DB = new DB();
+        public GameForm P1 = new GameForm();
+        public GameForm P2 = new GameForm();
+
+
+        public Stadium()
+        {
+            P1.Show();
+            P2.Show();
+
+            //own AlphaMon Data
+            AlphaMon ownAlphaMon = DB.GetAlphamon(5);
+            UsedAlphaMon OwnUsedAlphaMon = new UsedAlphaMon(ownAlphaMon);
+            
+
+
+            //opponent AlphaMon Data
+            AlphaMon OpponentAlphamon = DB.GetAlphamon(8);
+            UsedAlphaMon OpponentUsedAlphaMon = new UsedAlphaMon(OpponentAlphamon);
+            
+
+            P1.setAlphamonData(OwnUsedAlphaMon, OpponentUsedAlphaMon);
+            P2.setAlphamonData(OpponentUsedAlphaMon, OwnUsedAlphaMon);
+            //get data from pokemon
+
+
+        }
+        
+
     }
 }

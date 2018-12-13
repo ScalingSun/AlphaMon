@@ -27,7 +27,7 @@ namespace AlphaMon
             if(boolean)
             {
                 MessageBox.Show("Register succes!");
-                Form1 frmLogin = new Form1();
+                Login frmLogin = new Login();
                 frmLogin.Show();
                 this.Hide();
             }

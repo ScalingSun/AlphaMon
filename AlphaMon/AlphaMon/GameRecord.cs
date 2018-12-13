@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AlphaMon
 {
-    class GameRecord
+    public class GameRecord
     {
     }
 }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace AlphaMon
 {
-    class GameSession
+    public class GameSession
     {
-        UsedAlphaMon alphamon1 = new UsedAlphaMon();
+        //UsedAlphaMon alphamon1 = new UsedAlphaMon();
     }
 }
