@@ -29,7 +29,12 @@ namespace AlphaMon
                 Console.WriteLine(e.ToString());
             }
         }
-
+        /// <summary>
+        /// Use for listing players in the database.
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <returns></returns>
         public bool RegisterQuery(string Username, string Password)
         {
             using (SqlConnection conn = new SqlConnection(connection))
@@ -53,7 +58,12 @@ namespace AlphaMon
                 }
             }
         }
-
+        /// <summary>
+        /// Use for Logging into the game.
+        /// </summary>
+        /// <param name="UserName"></param>
+        /// <param name="Password"></param>
+        /// <returns></returns>
         public Account LoginFunction(string UserName, string Password)
         {
             using (SqlConnection conn = new SqlConnection(connection))
@@ -85,6 +95,12 @@ namespace AlphaMon
                 }
             }
         }
+
+        /// <summary>
+        /// get all aplhamon data based on "int ID"
+        /// </summary>
+        /// <param name="someID"></param>
+        /// <returns></returns>
         public AlphaMon GetAlphamon(int someID)
         {
             using (SqlConnection conn = new SqlConnection(connection))
@@ -118,6 +134,11 @@ namespace AlphaMon
                 }
             }
         }
+        /// <summary>
+        /// Gets a list of moves based on an alphamonID.
+        /// </summary>
+        /// <param name="AlphamonID"></param>
+        /// <returns></returns>
         public List <Move> GetMoves(int AlphamonID)
         {
             using (SqlConnection conn = new SqlConnection(connection))
@@ -148,6 +169,36 @@ namespace AlphaMon
                     }
                     conn.Close();
                     return Returnlist;
+                }
+            }
+        }
+        /// <summary>
+        /// Gets the power from a move based on the moveName. 
+        /// </summary>
+        /// <param name="MoveName"></param>
+        /// <returns></returns>
+        public int getPowerFromMove(string MoveName)
+        {
+            using (SqlConnection conn = new SqlConnection(connection))
+            {
+                DB AlphaMon = new DB();
+                using (SqlCommand ALPHAMON = new SqlCommand("SELECT Power FROM Moves WHERE Name = @MoveName", conn))
+                {
+                    conn.Open();
+                    ALPHAMON.Parameters.Add(new SqlParameter("MoveName", MoveName));
+                    SqlDataReader reader = ALPHAMON.ExecuteReader();
+                    if (!reader.HasRows)
+                    {
+                        return 0;
+                    }
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(0);
+                        return id;
+
+                    }
+                    conn.Close();
+                    return 0;
                 }
             }
         }

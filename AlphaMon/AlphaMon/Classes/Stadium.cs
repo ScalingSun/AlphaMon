@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Forms;
 namespace AlphaMon
 {
     public class Stadium
@@ -14,31 +14,42 @@ namespace AlphaMon
         public DB DB = new DB();
         public GameForm P1 = new GameForm();
         public GameForm P2 = new GameForm();
-
+        public CalcDamage Calc;
+        
 
         public Stadium()
         {
-            P1.Show();
-            P2.Show();
+             
+            P1.Show(); //the form for player1.
+            P2.Show(); //the form for player2.
 
             //own AlphaMon Data
-            AlphaMon ownAlphaMon = DB.GetAlphamon(5);
+            AlphaMon ownAlphaMon = DB.GetAlphamon(10);//5 is a random number, this should be changed based on the arduino input.
             UsedAlphaMon OwnUsedAlphaMon = new UsedAlphaMon(ownAlphaMon);
-            
 
 
             //opponent AlphaMon Data
-            AlphaMon OpponentAlphamon = DB.GetAlphamon(8);
+            AlphaMon OpponentAlphamon = DB.GetAlphamon(11);//8 is a random number, this should be changed based on the arduino input.
             UsedAlphaMon OpponentUsedAlphaMon = new UsedAlphaMon(OpponentAlphamon);
-            
 
+            //get data from pokemon
             P1.setAlphamonData(OwnUsedAlphaMon, OpponentUsedAlphaMon);
             P2.setAlphamonData(OpponentUsedAlphaMon, OwnUsedAlphaMon);
-            //get data from pokemon
+            while (true) {
+                if (P1.isClicked() && P2.isClicked())
+                {
+                    MessageBox.Show("both players clicked");
+                }
+            }
 
+
+
+            Calc = new CalcDamage(OwnUsedAlphaMon, OpponentUsedAlphaMon);
+        }
+        public void InitiateAttack()
+        {
 
         }
-        
 
     }
 }

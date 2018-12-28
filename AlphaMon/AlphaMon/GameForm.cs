@@ -13,9 +13,15 @@ namespace AlphaMon
     public partial class GameForm : Form
     {
         UsedAlphaMon AlphamonData;
+        UsedAlphaMon OpponentAlphamonData;
+        DB getpower = new DB();
+        public CalcDamage calc;
+        bool MoveIsSelected = false;
+
         public GameForm()
         {
             InitializeComponent();
+            calc = new CalcDamage(AlphamonData, OpponentAlphamonData);
         }
 
         private void btnSwapAlphamon_Click(object sender, EventArgs e)
@@ -25,6 +31,7 @@ namespace AlphaMon
         public void setAlphamonData(UsedAlphaMon AlphamonData, UsedAlphaMon OpponentAlphamonData)
         {
             this.AlphamonData = AlphamonData;
+            this.OpponentAlphamonData = OpponentAlphamonData;
             //own alphamon
             lblHPBar.Text = AlphamonData.currentHP.ToString() + "/" + AlphamonData.AlphamonData.HP.ToString();
             lblOwnName.Text = AlphamonData.AlphamonData.name;
@@ -40,7 +47,16 @@ namespace AlphaMon
 
         private void lbxMoves_MouseClick(object sender, MouseEventArgs e)
         {
-            lblTurnState.Text = AlphamonData.AlphamonData.name + " will be using: " + lbxMoves.SelectedItem.ToString();
+           lblTurnState.Text = AlphamonData.AlphamonData.name + " will be using: " + lbxMoves.SelectedItem.ToString();
+            string move = lbxMoves.SelectedItem.ToString();
+            int power = getpower.getPowerFromMove(move);
+            MoveIsSelected = true;
+            isClicked();
+            calc.Attack(power);
+        }
+        public bool isClicked()
+        {
+            return MoveIsSelected;
         }
     }
 }

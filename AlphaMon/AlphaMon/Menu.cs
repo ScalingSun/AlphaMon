@@ -46,7 +46,11 @@ namespace AlphaMon
             loginP2form.Show();
             loginP2form.test += GetData2;
         }
-
+        /// <summary>
+        /// gets and sets the data for player 1.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="Userdata"></param>
         public void GetData(object sender, Account Userdata)
         {
             this.userdataP1 = Userdata;
@@ -60,6 +64,11 @@ namespace AlphaMon
             ProfileP1 = CreateButton(toplocation, leftlocation, buttonwidth, buttonheight, "btnProfileP1", "Profiel P1");
             ProfileP1.Click += ProfileP1_Click;
         }
+        /// <summary>
+        /// gets and sets the data for player 1.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="Userdata"></param>
         public void GetData2(object sender, Account Userdata)
         {
             this.userdataP2 = Userdata;
