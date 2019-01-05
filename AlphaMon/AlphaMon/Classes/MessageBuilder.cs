@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlphaMon
+namespace Alphamon
 {
     /// <summary>
     /// Class to extract messages from a text feed (like serial port).

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-namespace AlphaMon
+namespace Alphamon
 {
     public class Stadium
     {
@@ -16,40 +16,52 @@ namespace AlphaMon
         public GameForm P2 = new GameForm();
         public CalcDamage Calc;
         
-
         public Stadium()
-        {
-             
+        { 
             P1.Show(); //the form for player1.
             P2.Show(); //the form for player2.
 
             //own AlphaMon Data
-            AlphaMon ownAlphaMon = DB.GetAlphamon(10);//5 is a random number, this should be changed based on the arduino input.
-            UsedAlphaMon OwnUsedAlphaMon = new UsedAlphaMon(ownAlphaMon);
+            Alphamon ownAlphaMon = DB.GetAlphamon("04d0611a4c5880");//5 is a random number, this should be changed based on the arduino input.
+            UsedAlphamon OwnUsedAlphaMon = new UsedAlphamon(ownAlphaMon);
 
 
             //opponent AlphaMon Data
-            AlphaMon OpponentAlphamon = DB.GetAlphamon(11);//8 is a random number, this should be changed based on the arduino input.
-            UsedAlphaMon OpponentUsedAlphaMon = new UsedAlphaMon(OpponentAlphamon);
+            Alphamon OpponentAlphamon = DB.GetAlphamon("04d5621a4c5880");//8 is a random number, this should be changed based on the arduino input.
+            UsedAlphamon OpponentUsedAlphaMon = new UsedAlphamon(OpponentAlphamon);
 
-            //get data from pokemon
-            P1.setAlphamonData(OwnUsedAlphaMon, OpponentUsedAlphaMon);
-            P2.setAlphamonData(OpponentUsedAlphaMon, OwnUsedAlphaMon);
-            while (true) {
-                if (P1.isClicked() && P2.isClicked())
-                {
-                    MessageBox.Show("both players clicked");
-                }
-            }
-
-
-
-            Calc = new CalcDamage(OwnUsedAlphaMon, OpponentUsedAlphaMon);
+            //get data from alphamon
+            P1.setAlphamonData(this, OwnUsedAlphaMon, OpponentUsedAlphaMon);
+            P2.setAlphamonData(this, OpponentUsedAlphaMon, OwnUsedAlphaMon);
         }
-        public void InitiateAttack()
+
+        public bool CheckPlayers()
         {
-
+            bool clicked = false;
+           
+            if(P1.isClicked() == false && P2.isClicked() == false)
+            {
+                clicked = false;
+            }
+            else if(P1.isClicked() == true && P2.isClicked() == false)
+            {
+                clicked = false;
+            }
+            else if(P1.isClicked() == false && P2.isClicked() == true)
+            {
+                clicked = false;
+            }
+            else
+            {
+                clicked = true;
+            }
+            
+            return clicked;
         }
 
+        public void Attack(int Power)
+        {
+            Console.WriteLine("Attack initiated");
+        }
     }
 }

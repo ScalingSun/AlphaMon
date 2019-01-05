@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlphaMon
+namespace Alphamon
 {
     public class CalcDamage
     {
@@ -15,14 +15,14 @@ namespace AlphaMon
         // modifier = 1 * 1 * 1 * 1 * STAB * Type * 1;
         //result = damage2 * modifier;
 
-        UsedAlphaMon alphamonData;
-        UsedAlphaMon OpponentAlphamonData;
+        UsedAlphamon alphamonData;
+        UsedAlphamon OpponentAlphamonData;
         bool player1;
         bool player2;
         int player;
         int power;
 
-        public CalcDamage(UsedAlphaMon AlphamonData, UsedAlphaMon OpponentAlphamonData)
+        public CalcDamage(UsedAlphamon AlphamonData, UsedAlphamon OpponentAlphamonData)
         {
             this.alphamonData = AlphamonData;
             this.OpponentAlphamonData = OpponentAlphamonData;

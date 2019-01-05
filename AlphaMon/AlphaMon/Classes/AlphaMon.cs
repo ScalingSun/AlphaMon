@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlphaMon
+namespace Alphamon
 {
-    public class AlphaMon
+    public class Alphamon
     {
-        public int id;
+        public string id;
         public string name;
         public int type;
         public int SpDefense;
@@ -19,7 +19,7 @@ namespace AlphaMon
         public int HP;
         DB DB = new DB();
         public List<Move> moves = new List<Move>();
-        public AlphaMon(int id,string name,int type, int SpDefense, int SpAttack, int Attack, int Defense, int Speed,int HP)
+        public Alphamon(string id,string name,int type, int SpDefense, int SpAttack, int Attack, int Defense, int Speed,int HP)
         {
             this.id = id;
             this.name = name;
@@ -32,7 +32,5 @@ namespace AlphaMon
             this.HP = HP;
             moves = DB.GetMoves(id);
         }
-        
-        
     }
 }

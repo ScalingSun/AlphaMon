@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Account.cs" />
-    <Compile Include="Classes\AlphaMon.cs" />
+    <Compile Include="Classes\Alphamon.cs" />
     <Compile Include="Classes\Arduino.cs" />
     <Compile Include="Classes\CalcDamage.cs" />
     <Compile Include="Classes\DB.cs" />
@@ -91,7 +91,7 @@
     <Compile Include="Classes\SerialMessenger.cs" />
     <Compile Include="Classes\Stadium.cs" />
     <Compile Include="Classes\Types.cs" />
-    <Compile Include="Classes\UsedAlphaMon.cs" />
+    <Compile Include="Classes\UsedAlphamon.cs" />
     <EmbeddedResource Include="GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
     </EmbeddedResource>

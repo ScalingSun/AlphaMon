@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlphaMon
+namespace Alphamon
 {
-    public class UsedAlphaMon
+    public class UsedAlphamon
     {
-        public AlphaMon AlphamonData;
+        public Alphamon AlphamonData;
         public int currentHP;
         public int statusID;
         
-        public UsedAlphaMon(AlphaMon AlphamonData)
+        public UsedAlphamon(Alphamon AlphamonData)
         {
             this.AlphamonData = AlphamonData;
             this.currentHP = AlphamonData.HP;

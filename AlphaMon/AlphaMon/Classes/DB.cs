@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AlphaMon
+namespace Alphamon
 {
     public class DB
     {
@@ -101,7 +101,7 @@ namespace AlphaMon
         /// </summary>
         /// <param name="someID"></param>
         /// <returns></returns>
-        public AlphaMon GetAlphamon(int someID)
+        public Alphamon GetAlphamon(string someID)
         {
             using (SqlConnection conn = new SqlConnection(connection))
             {
@@ -118,16 +118,17 @@ namespace AlphaMon
                     }
                     while (reader.Read())
                     {
-                        int id = reader.GetInt32(0);
+                        string id = reader.GetString(0);
                         string name = reader.GetString(1);
                         int type = reader.GetInt32(2);
-                        int SpDefense = reader.GetInt32(3);
-                        int SpAttack = reader.GetInt32(4);
+                        int HP = reader.GetInt32(4);
                         int Attack = reader.GetInt32(5);
                         int Defense = reader.GetInt32(6);
-                        int Speed = reader.GetInt32(7);
-                        int HP = reader.GetInt32(8);
-                        return new AlphaMon(id, name, type, SpDefense, SpAttack, Attack, Defense, Speed, HP);
+                        int SpAttack = reader.GetInt32(7);
+                        int SpDefense = reader.GetInt32(8); 
+                        int Speed = reader.GetInt32(9);
+                        
+                        return new Alphamon(id, name, type, SpDefense, SpAttack, Attack, Defense, Speed, HP);
                     }
                     conn.Close();
                     return null;
@@ -139,7 +140,7 @@ namespace AlphaMon
         /// </summary>
         /// <param name="AlphamonID"></param>
         /// <returns></returns>
-        public List <Move> GetMoves(int AlphamonID)
+        public List <Move> GetMoves(string AlphamonID)
         {
             using (SqlConnection conn = new SqlConnection(connection))
             {
@@ -165,7 +166,6 @@ namespace AlphaMon
                         int statusChance = reader.GetInt32(5);
                         int Status = reader.GetInt32(6);
                         Returnlist.Add(new Move(id, name, power, type, description, statusChance, Status));
-                        
                     }
                     conn.Close();
                     return Returnlist;

@@ -5,7 +5,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace AlphaMon
+namespace Alphamon
 {
     /// <summary>
     /// Class to send / receive messages using the serial port.
