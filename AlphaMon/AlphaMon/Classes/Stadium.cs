@@ -15,11 +15,14 @@ namespace Alphamon
         public GameForm P1 = new GameForm();
         public GameForm P2 = new GameForm();
         public CalcDamage Calc;
+        public List<GameForm> CalcData;
         
         public Stadium()
         { 
             P1.Show(); //the form for player1.
+            P1.Name = "P1";
             P2.Show(); //the form for player2.
+            P2.Name = "P2";
 
             //own AlphaMon Data
             Alphamon ownAlphaMon = DB.GetAlphamon("04d0611a4c5880");//5 is a random number, this should be changed based on the arduino input.
@@ -59,9 +62,14 @@ namespace Alphamon
             return clicked;
         }
 
-        public void Attack(int Power)
+        public void Attack(List<GameForm> Data)
         {
-            Console.WriteLine("Attack initiated");
+            this.CalcData = Data;
+            foreach (GameForm test in CalcData)
+            {
+                Console.WriteLine(test.);
+            }
+
         }
     }
 }
