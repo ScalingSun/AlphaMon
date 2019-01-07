@@ -17,7 +17,7 @@ namespace Alphamon
             try
             {
                 var cb = new SqlConnectionStringBuilder();
-                cb.DataSource = "alphamon.database.windows.net";
+                cb.DataSource = "alphamon2.database.windows.net";
                 cb.UserID = "alphamon";
                 cb.Password = "Konijnenvanger648";
                 cb.InitialCatalog = "Alphamon";
@@ -41,7 +41,7 @@ namespace Alphamon
             {
                 try
                 {
-                    using (SqlCommand REGISTER = new SqlCommand("INSERT INTO Account (Username, Password, ELO, Wins, Losses) VALUES (@Username, @Password, 50, 0, 0)", conn))
+                    using (SqlCommand REGISTER = new SqlCommand("INSERT INTO Account (Username, Password, ELO, Wins, Losses, Role) VALUES (@Username, @Password, 1000, 0, 0,0)", conn))
                     {
                         conn.Open();
                         REGISTER.Parameters.Add(new SqlParameter("@Username", Username));
