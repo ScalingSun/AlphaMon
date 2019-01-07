@@ -1,4 +1,4 @@
-﻿namespace AlphaMon
+﻿namespace Alphamon
 {
     partial class frmRegister
     {

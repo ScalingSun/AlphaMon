@@ -5,18 +5,20 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AlphaMon
+namespace Alphamon
 {
     public partial class GameForm : Form
     {
-        UsedAlphaMon AlphamonData;
-        UsedAlphaMon OpponentAlphamonData;
+        UsedAlphamon AlphamonData;
+        UsedAlphamon OpponentAlphamonData;
         DB getpower = new DB();
         public CalcDamage calc;
         bool MoveIsSelected = false;
+        Stadium Stadium;
 
         public GameForm()
         {
@@ -28,10 +30,11 @@ namespace AlphaMon
         {
 
         }
-        public void setAlphamonData(UsedAlphaMon AlphamonData, UsedAlphaMon OpponentAlphamonData)
+        public void setAlphamonData(Stadium Stadium, UsedAlphamon AlphamonData, UsedAlphamon OpponentAlphamonData)
         {
             this.AlphamonData = AlphamonData;
             this.OpponentAlphamonData = OpponentAlphamonData;
+            this.Stadium = Stadium;
             //own alphamon
             lblHPBar.Text = AlphamonData.currentHP.ToString() + "/" + AlphamonData.AlphamonData.HP.ToString();
             lblOwnName.Text = AlphamonData.AlphamonData.name;
@@ -47,16 +50,36 @@ namespace AlphaMon
 
         private void lbxMoves_MouseClick(object sender, MouseEventArgs e)
         {
-           lblTurnState.Text = AlphamonData.AlphamonData.name + " will be using: " + lbxMoves.SelectedItem.ToString();
-            string move = lbxMoves.SelectedItem.ToString();
-            int power = getpower.getPowerFromMove(move);
+            lblTurnState.Text = AlphamonData.AlphamonData.name + " will be using: " + lbxMoves.SelectedItem.ToString();
             MoveIsSelected = true;
-            isClicked();
-            calc.Attack(power);
+
+            Thread thread = new Thread(() =>
+            {
+                bool clicked = false;
+                while(clicked == false)
+                {
+                    clicked = Stadium.CheckPlayers();
+                    Thread.Sleep(10000);
+                }
+                
+                Action ActionOne = new Action(Attack);
+                this.BeginInvoke(ActionOne);
+                clicked = false;
+            });
+            thread.Start();
+
+            MessageBox.Show("Wacht op de tegenstander");
         }
         public bool isClicked()
         {
             return MoveIsSelected;
+        }
+
+        private void Attack()
+        {
+            string move = lbxMoves.SelectedItem.ToString();
+            int power = getpower.getPowerFromMove(move);
+            Stadium.Attack(power);
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AlphaMon
+namespace Alphamon
 {
     public partial class ProfileForm : Form
     {

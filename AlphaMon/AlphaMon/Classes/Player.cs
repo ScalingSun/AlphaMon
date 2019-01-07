@@ -4,22 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlphaMon
+namespace Alphamon
 {
     public class Player
     {
-        int userID = 0;
-        string Username = "something";
-        string UserPassword = "SomethingElse";
-        int elo = 50;
-        int wins = 0;
-        int losses = 0;
+        private int UserID;
+        private string Username;
+        private string UserPassword;
+        private int Elo;
+        private int Wins;
+        private int Losses;
         public Player()
         {
-            Account account = new Account(userID, Username, UserPassword,elo,wins,losses);
-            //AlphaMon Alphamon = new AlphaMon();
+            
         }
-
-
     }
 }
